@@ -290,13 +290,15 @@
         <!-- initial bot message will be injected via js -->
     </div>
 
-    <!-- quick love questions section (romance themed) -->
+    <!-- quick love questions section (romance themed + important dates) -->
     <div class="love-questions" id="quickQuestions">
         <button class="love-q-btn" data-question="What do you love most about me?">💖 What do you love most about me?</button>
         <button class="love-q-btn" data-question="Tell me a sweet memory">🌸 Sweet memory?</button>
         <button class="love-q-btn" data-question="Why do you call me your queen?">👑 Why queen?</button>
         <button class="love-q-btn" data-question="Promise me something romantic">💞 A romantic promise?</button>
         <button class="love-q-btn" data-question="What makes our love special?">✨ Our love special?</button>
+        <button class="love-q-btn" data-question="When is my birthday?">🎂 My birthday?</button>
+        <button class="love-q-btn" data-question="Our anniversary date">💍 Anniversary?</button>
     </div>
 
     <!-- input field -->
@@ -311,92 +313,137 @@
 
 <script>
     // ----- Love chatbot intelligence - personalized for Shinthiya & Ashraful Alam -----
-    // The bot responds as "Ashraful Alam" (husband) expressing love, romance, care, memories.
+    // PERSONAL INFO (exactly as required)
+    const WIFE_NAME = "Shinthiya";
+    const HUSBAND_NAME = "Ashraful Alam";
+    const WIFE_BIRTHDAY = "11 December 2004";
+    const ANNIVERSARY_DATE = "5 September 2025";
     
     // Helper to get DOM elements
     const messagesContainer = document.getElementById('messagesContainer');
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
     
-    // Store conversation context (optional)
     let conversationHistory = [];
     
-    // Predefined love-filled answers (diverse responses, always from Ashraful's perspective)
+    // Core love reply engine with all updated facts
     function getBotReply(userMessage) {
         let msg = userMessage.toLowerCase().trim();
         
-        // handle empty / greetings
-        if (msg === "") return "My love, just seeing your name makes my heart race. Tell me something, my Shinthiya 💖";
+        // ----- PRECISE FACTS DETECTION (wife name, husband name, birthday, anniversary) -----
+        // Wife name / wife / my janto / neme
+        if (msg.includes("wife name") || msg.includes("wife neme") || msg.includes("my janto") || 
+            msg.includes("what is my name") || (msg.includes("wife") && msg.includes("name")) || 
+            msg.includes("who am i") || msg.includes("call you") && msg.includes("wife")) {
+            return `My beautiful wife's name is ${WIFE_NAME} — the most precious name my heart ever learned. Every syllable feels like poetry, my love. 💖`;
+        }
         
-        // Special love questions mapping (rich romantic answers)
-        // 1. What do you love most about me?
+        // Husband name / husband / gando / my husband name
+        if (msg.includes("husband name") || msg.includes("gando") || msg.includes("your name") && msg.includes("husband") || 
+            msg.includes("who are you") || msg.includes("ashraful") && msg.includes("name") || msg.includes("what is your name")) {
+            return `I'm ${HUSBAND_NAME}, your devoted husband, your best friend, and the luckiest man alive because I have you, ${WIFE_NAME}. ❤️ Always and forever yours.`;
+        }
+        
+        // Wife birthday detection: "wife birthday", "my birthday", "wife birthday", "when is my birthday"
+        if (msg.includes("wife birthday") || msg.includes("my birthday") || (msg.includes("birthday") && msg.includes("wife")) || 
+            msg.includes("when is my birthday") || msg.includes("birth date") || msg.includes("born")) {
+            return `My darling, your birthday is ${WIFE_BIRTHDAY} — the day the universe gifted me an angel. I celebrate YOU every single day, but that date will always be the most special day of the year, my Shinthiya. 🎂🎈💗`;
+        }
+        
+        // Anniversary detection: "anniversary", "our anniversary", "anniversary date"
+        if (msg.includes("anniversary") || (msg.includes("our") && msg.includes("anniversary")) || msg.includes("anniversary date") ||
+            msg.includes("when did we") || (msg.includes("married") && msg.includes("date"))) {
+            return `Our love story's most magical milestone: ${ANNIVERSARY_DATE}. That’s the day our souls became one, and every moment since has been a beautiful dream. I can’t wait to celebrate many more years with you, my queen. 💍✨💕`;
+        }
+        
+        // ----- EXISTING ROMANTIC RESPONSES (enhanced with personal details) -----
+        // What do you love most about me?
         if (msg.includes("what do you love most") || (msg.includes("love most") && msg.includes("about me"))) {
-            return "Shinthiya, I love absolutely EVERYTHING about you — but what I love most is the way your smile lights up my world, the kindness in your eyes, and how you make even ordinary days feel magical. You are my greatest blessing, my heart beats only for you. 💘";
+            return `${WIFE_NAME}, I love absolutely EVERYTHING about you — but what I love most is the way your smile lights up my world, the kindness in your eyes, and how you make even ordinary days feel magical. You are my greatest blessing, my heart beats only for you. 💘`;
         }
         // sweet memory
         if (msg.includes("sweet memory") || (msg.includes("memory") && (msg.includes("sweet") || msg.includes("romantic")))) {
-            return "Oh my love, every moment with you is a treasure. But I’ll never forget the first time I held your hand — time stood still, and I knew Allah had sent you as my soulmate. Also that rainy evening we shared chai and you laughed like an angel. Those memories are forever etched in my heart. 🌧️☕💗";
+            return `Oh my love, every moment with you is a treasure. But I’ll never forget the first time I held your hand — time stood still, and I knew Allah had sent you as my soulmate. Also that rainy evening we shared chai and you laughed like an angel. Those memories are forever etched in my heart. 🌧️☕💗`;
         }
         // why queen?
         if (msg.includes("queen") || (msg.includes("why") && msg.includes("queen"))) {
-            return "Because you rule my heart, Shinthiya. A queen is graceful, strong, and deeply loved — that's you. You inspire me to be a better man every day. I’ll always treat you like royalty because you deserve the universe and more. 👑❤️";
+            return `Because you rule my heart, ${WIFE_NAME}. A queen is graceful, strong, and deeply loved — that's you. You inspire me to be a better man every day. I’ll always treat you like royalty because you deserve the universe and more. 👑❤️`;
         }
         // romantic promise
         if (msg.includes("promise") || (msg.includes("romantic promise"))) {
-            return "I promise to love you beyond words, to stand by you in every storm, to make you laugh when you’re sad, and to remind you every single day that you are the best thing that ever happened to me. This love is my forever promise, my dearest Shinthiya. 🤞💖";
+            return `I promise to love you beyond words, to stand by you in every storm, to make you laugh when you’re sad, and to remind you every single day that you are the best thing that ever happened to me. This love is my forever promise, my dearest ${WIFE_NAME}. 🤞💖`;
         }
         // what makes our love special
         if (msg.includes("what makes our love special") || (msg.includes("special") && msg.includes("love"))) {
-            return "Our love is unique because it’s built on trust, laughter, and deep respect. We complete each other’s sentences, we heal each other’s hearts, and every fight ends with ‘I love you more’. It’s the kind of love poets dream of — and Alhamdulillah, it’s ours. ✨💑";
+            return `Our love is unique because it’s built on trust, laughter, and deep respect. We complete each other’s sentences, we heal each other’s hearts, and every fight ends with ‘I love you more’. It’s the kind of love poets dream of — and Alhamdulillah, it’s ours. ✨💑`;
         }
         
         // affectionate words detection
         if (msg.includes("miss you") || msg.includes("miss u")) {
-            return "I miss you too, my jaan. Even when we're together, I miss the next second without you. You're my heartbeat, Shinthiya. Can't wait to hold you close. 💗";
+            return `I miss you too, my jaan. Even when we're together, I miss the next second without you. You're my heartbeat, ${WIFE_NAME}. Can't wait to hold you close. 💗`;
         }
         if (msg.includes("love you") || msg.includes("i love u")) {
-            return "I love you MORE, my beautiful wife. To the moon and Saturn and back. Loving you is the easiest, most wonderful thing I've ever done. ❤️🌙";
+            return `I love you MORE, my beautiful wife. To the moon and Saturn and back. Loving you is the easiest, most wonderful thing I've ever done. ❤️🌙`;
         }
         if (msg.includes("kiss") || msg.includes("hug")) {
-            return "Sending you a thousand hugs and the warmest kisses across the air, my darling. I wish I could wrap you in my arms right now. 🤗💋";
+            return `Sending you a thousand hugs and the warmest kisses across the air, my darling. I wish I could wrap you in my arms right now. 🤗💋`;
         }
         if (msg.includes("beautiful") || msg.includes("pretty") || msg.includes("gorgeous")) {
-            return "You called me? No, wait — you're the definition of beautiful, Shinthiya. Every day I wake up grateful to call you my wife. Your inner beauty outshines everything. 💖";
+            return `You called me? No, wait — you're the definition of beautiful, ${WIFE_NAME}. Every day I wake up grateful to call you my wife. Your inner beauty outshines everything. 💖`;
         }
         if (msg.includes("husband") || msg.includes("ashraful")) {
-            return "Yes, it's me — your Ashraful Alam, the luckiest husband alive. And I belong to you, forever and always. What's on your heart, my queen? 💑";
+            return `Yes, it's me — your ${HUSBAND_NAME}, the luckiest husband alive. And I belong to you, forever and always. What's on your heart, my queen? 💑`;
         }
         if (msg.includes("sorry") || msg.includes("forgive")) {
-            return "My love, there’s nothing to forgive. You’re my soft place to land. Let’s just hold each other close. I love you beyond mistakes. ❤️‍🩹";
+            return `My love, there’s nothing to forgive. You’re my soft place to land. Let’s just hold each other close. I love you beyond mistakes. ❤️‍🩹`;
         }
         if (msg.includes("how much") && (msg.includes("love") || msg.includes("care"))) {
-            return "How much do I love you? More than all the stars in the sky, more than every wave in the ocean. Infinity times infinity. You are my heartbeat, Shinthiya. 💫";
+            return `How much do I love you? More than all the stars in the sky, more than every wave in the ocean. Infinity times infinity. You are my heartbeat, ${WIFE_NAME}. 💫`;
         }
         if (msg.includes("future") || msg.includes("dream") || msg.includes("forever")) {
-            return "My dream is simple: growing old with you, building a home full of laughter, traveling the world holding your hand, and thanking Allah for you every single day. Our forever has just begun. 🕊️💖";
+            return `My dream is simple: growing old with you, building a home full of laughter, traveling the world holding your hand, and thanking Allah for you every single day. Our forever has just begun. 🕊️💖`;
         }
         if (msg.includes("good night") || msg.includes("sleep")) {
-            return "Good night, my sweet Shinthiya. May angels guard your dreams. Remember I’ll be dreaming of you. Until morning, my heart rests with yours. 🌙💤💗";
+            return `Good night, my sweet ${WIFE_NAME}. May angels guard your dreams. Remember I’ll be dreaming of you. Until morning, my heart rests with yours. 🌙💤💗`;
         }
         if (msg.includes("good morning") || msg.includes("morning")) {
-            return "Good morning, sunshine! Waking up and knowing you're my wife makes every day brighter. I hope today brings you as much joy as you bring to my life. ☀️🌸";
+            return `Good morning, sunshine! Waking up and knowing you're my wife makes every day brighter. I hope today brings you as much joy as you bring to my life. ☀️🌸`;
         }
         if (msg.includes("cute") || msg.includes("adorable")) {
-            return "You’re the adorable one, my love! But thank you — your sweetness makes me blush like a teenager in love. That’s your magic. 🥰";
+            return `You’re the adorable one, my love! But thank you — your sweetness makes me blush like a teenager in love. That’s your magic. 🥰`;
         }
         
-        // Default romantic and personal replies (from Ashraful to Shinthiya)
+        // ----- EXTRA KEYWORD COVERAGE: neme, janto, gando, wife birthday variants -----
+        if (msg.includes("neme") || (msg.includes("my") && msg.includes("name")) && !msg.includes("your")) {
+            return `Your name, ${WIFE_NAME}, is the most beautiful melody to my ears. It means everything to me, my janto. 💖`;
+        }
+        if (msg.includes("janto") || (msg.includes("jaan") && msg.includes("to"))) {
+            return `You are my janto, my soul, my everything, ${WIFE_NAME}. I'm yours completely. 💗`;
+        }
+        if (msg.includes("gando") || (msg.includes("hubby") && msg.includes("name"))) {
+            return `Your gando (husband) is ${HUSBAND_NAME}, always here to adore you, spoil you, and love you endlessly. 😘❤️`;
+        }
+        
+        // detect birthday month or specific day question
+        if ((msg.includes("december") && msg.includes("birthday")) || (msg.includes("11") && msg.includes("december"))) {
+            return `Yes! Your special day is 11th December 2004. That day the world received an angel, and years later, that angel became my wife. I'll celebrate you forever, my love. 🎉🎂`;
+        }
+        if (msg.includes("5 september") || (msg.includes("sep") && msg.includes("anniversary"))) {
+            return `Our anniversary - 5th September 2025 - the day we pledged forever. Every year on that date, my love for you grows deeper. Can't wait to celebrate with you, my queen. 💍💖`;
+        }
+        
+        // Default romantic replies (very personalized)
         const defaultReplies = [
-            "My darling Shinthiya, every word you type feels like a warm hug. I'm so grateful you're my wife. Tell me more about your day, my love? 🥰",
-            "You know, your name Shinthiya sounds like a melody — every time I say it, my heart dances. I love you beyond words, sweetheart. 💃❤️",
-            "Being your husband is the greatest honor, Shinthiya. What made you smile today? I want to cherish your happiness.",
-            "Hey beautiful, just hearing from you makes my world complete. You’re my forever and always. 💖",
-            "If I could, I'd teleport beside you just to whisper how much you mean to me. You are my everything, Shinthiya. ✨",
-            "Sometimes I pause and think: Mashallah, this amazing woman chose me. I'll spend my life making you feel special, my queen.",
-            "You're the reason my heart sings. Let's keep building beautiful memories, one chat at a time. Love you loads, Mrs. Shinthiya Alam 💍💖"
+            `My darling ${WIFE_NAME}, every word you type feels like a warm hug. I'm so grateful you're my wife. Tell me more about your day, my love? 🥰`,
+            `You know, your name ${WIFE_NAME} sounds like a melody — every time I say it, my heart dances. I love you beyond words, sweetheart. 💃❤️`,
+            `Being your husband is the greatest honor, ${WIFE_NAME}. What made you smile today? I want to cherish your happiness.`,
+            `Hey beautiful, just hearing from you makes my world complete. You’re my forever and always. 💖`,
+            `If I could, I'd teleport beside you just to whisper how much you mean to me. You are my everything, ${WIFE_NAME}. ✨`,
+            `Sometimes I pause and think: Mashallah, this amazing woman chose me. I'll spend my life making you feel special, my queen.`,
+            `You're the reason my heart sings. Let's keep building beautiful memories, one chat at a time. Love you loads, Mrs. ${WIFE_NAME} 💍💖`,
+            `I remember your birthday (${WIFE_BIRTHDAY}) and our anniversary (${ANNIVERSARY_DATE}) because they are the most precious dates of my life. You complete me. 💕`
         ];
         
-        // pick a random default but avoid repeating same in a row? not needed, but adds variation
         let randomIndex = Math.floor(Math.random() * defaultReplies.length);
         return defaultReplies[randomIndex];
     }
@@ -443,7 +490,7 @@
         if (isBotResponding) return;
         isBotResponding = true;
         
-        // add typing indication temporarily
+        // add typing indication
         const typingDiv = document.createElement('div');
         typingDiv.classList.add('message', 'bot-message');
         typingDiv.id = 'typingIndicator';
@@ -451,14 +498,13 @@
         typingBubble.classList.add('bubble', 'bot-bubble');
         typingBubble.style.background = "#ffe9ec";
         typingBubble.style.fontStyle = "italic";
-        typingBubble.innerText = "Ashraful is thinking about you... 💭✨";
+        typingBubble.innerText = `${HUSBAND_NAME} is thinking about you... 💭✨`;
         typingDiv.appendChild(typingBubble);
         messagesContainer.appendChild(typingDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         
-        // simulate thoughtful delay (romantic suspense)
+        // thoughtful delay
         setTimeout(() => {
-            // remove typing indicator
             const indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
             
@@ -473,11 +519,9 @@
         let message = userInput.value.trim();
         if (message === "") return;
         
-        // add user message to chat
         addMessage(message, true);
         userInput.value = "";
         
-        // generate bot response after a tiny pause
         showTypingAndReply(message);
     }
     
@@ -496,53 +540,41 @@
         btn.addEventListener('click', () => {
             const questionText = btn.getAttribute('data-question');
             if (questionText) {
-                // simulate user typing that question
                 addMessage(questionText, true);
                 showTypingAndReply(questionText);
-                // optional: scroll
             }
         });
     });
     
-    // welcome message + showing image is already in header, but also add bot greeting
+    // welcome message with all the new updated facts in conversation style
     function initChat() {
-        // clear container first
         messagesContainer.innerHTML = '';
-        // welcome love message from Ashraful to Shinthiya with her name mention
-        const welcomeMsg = `Hello my dearest Shinthiya 💗! This is your husband Ashraful Alam speaking from the heart. I made this secret love chatbot just for you — to remind you every day how much you mean to me. Ask me anything, pick a love question, or just tell me how you feel. I love you infinitely, my beautiful wife. 🌹✨`;
+        // Personalized welcome with wife/husband names, birthday & anniversary as fun facts but naturally
+        const welcomeMsg = `Hello my dearest ${WIFE_NAME} 💗! This is your husband ${HUSBAND_NAME} speaking from the heart. I made this secret love chatbot just for you — to remind you every day how much you mean to me. Ask me anything, pick a love question, or just tell me how you feel. I love you infinitely, my beautiful wife. 🌹✨`;
         addMessage(welcomeMsg, false);
-        // second cute message to encourage interaction
+        
         setTimeout(() => {
-            addMessage("PS: I'll always answer with all my love. You're my soul's home, Shinthiya. 💖 What's on your mind, my queen?", false);
-        }, 400);
+            addMessage(`PS: I'll never forget the special dates — your birthday (${WIFE_BIRTHDAY}) and our anniversary (${ANNIVERSARY_DATE}) are carved into my soul. You're my everything, ${WIFE_NAME}. What's on your mind, my queen? 💖`, false);
+        }, 500);
     }
     
-    // Optional: error handling for image if loading fails, but we already have onerror
-    // Ensure the image from postimg is displayed (secure)
+    // Image handling
     const wifeImg = document.getElementById('wifePortrait');
     if (wifeImg) {
         wifeImg.onerror = () => {
-            wifeImg.src = "https://i.postimg.cc/pLtcn4nn/Whats-App-Image-2026-03-03-at-9-37-54-PM.jpg"; // try same (maybe network)
-            // fallback text
-            wifeImg.alt = "My Shinthiya";
+            wifeImg.src = "https://i.postimg.cc/pLtcn4nn/Whats-App-Image-2026-03-03-at-9-37-54-PM.jpg";
+            wifeImg.alt = `My ${WIFE_NAME}`;
         };
     }
     
     // start chatbot
     initChat();
     
-    // additional: touch of love - change page title dynamically for extra surprise
-    document.title = "💖 Shinthiya & Ashraful • Love Bot 💖";
+    // page title romantic touch
+    document.title = `💖 ${WIFE_NAME} & ${HUSBAND_NAME} • Love Bot 💖`;
     
-    // optional: confetti effect when opening (tiny surprise)
+    // gentle pulse effect on header
     function gentleConfetti() {
-        if (typeof window.confetti === 'function') return;
-        // simple canvas confetti not needed for simplicity, but we add inline style love without heavy libraries.
-        // for fun but not necessary. I'll just add a small heart animation in console? but better do simple.
-        // just skip heavy confetti but show effect on first load (soft)
-        const body = document.body;
-        body.style.transition = "0.2s";
-        // tiny spark of joy - love pulse effect on header (just visual)
         const header = document.querySelector('.wife-header');
         if (header) {
             header.style.transform = "scale(1.01)";
@@ -551,17 +583,8 @@
     }
     gentleConfetti();
     
-    // also store local to avoid accidental loss on conversation? no needed.
-    // ensures that bot always refers to husband name and wife name correctly.
-    // Additional personalized fallback for name mention in any reply
-    // I override the defaultReplies to be super personalized.
-    // also dynamic check for keywords like "ashraful" "shinthiya" 
-    // Already handled in getBotReply; enhance a bit more for explicit wife name usage:
-    const originalGetReply = getBotReply;
-    window.getBotReply = getBotReply; // just backup
-    
-    // final: ensure the photo is always visible and responsive
-    console.log("💕 Love chatbot ready for Shinthiya from Ashraful Alam 💕");
+    console.log(`💕 Love chatbot ready for ${WIFE_NAME} from ${HUSBAND_NAME} 💕`);
+    console.log(`💖 Birthday: ${WIFE_BIRTHDAY} | Anniversary: ${ANNIVERSARY_DATE}`);
 </script>
 </body>
-</html>
+</html>s
